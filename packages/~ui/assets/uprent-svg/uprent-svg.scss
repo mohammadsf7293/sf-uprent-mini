@@ -1,0 +1,172 @@
+.logo-container {
+  position: relative;
+  display: inline-block;
+}
+
+.default {
+  fill: var(--c_fg);
+  stroke: var(--c_fg);
+}
+
+.inverse {
+  fill: var(--c_fg-inverse);
+  stroke: var(--c_fg-inverse);
+}
+
+.title {
+  stroke: none;
+}
+
+.icon {
+  height: 100%;
+}
+
+.logo-container:hover {
+  & .flameBlue,
+  & .flameRed {
+    animation-play-state: running;
+  }
+
+  & .airbox {
+    visibility: visible;
+    opacity: 1;
+    transition: opacity 0.7s 0.3s;
+  }
+
+  & .house {
+    animation: launch 1s forwards;
+  }
+}
+
+@keyframes launch {
+  0% {
+    transform: translateY(0);
+  }
+  30% {
+    transform: translateY(10%);
+  }
+  100% {
+    transform: translateY(-15%);
+  }
+}
+
+@keyframes wiggle {
+  0% {
+    transform: scale(1) translateY(1%);
+  }
+  50% {
+    transform: scale(1.4) translateY(1%);
+  }
+  100% {
+    transform: scale(1) translateY(1%);
+  }
+}
+
+.flameBlue {
+  transform-origin: 10% 60%;
+  transform: scale(1) translateY(1%);
+  animation: wiggle 0.5s linear infinite;
+  animation-play-state: paused;
+}
+
+.flameRed {
+  transform-origin: 10% 61%;
+  transform: scale(1) translateY(1%);
+  animation: wiggle 0.3s linear infinite;
+  animation-delay: 0.13s;
+  animation-play-state: paused;
+}
+
+.airbox {
+  position: absolute;
+  display: flex;
+  width: 16.5%;
+  height: 27.8%;
+  left: 4%;
+  top: 30%;
+  justify-content: space-evenly;
+  opacity: 0;
+}
+
+.air {
+  transform: translateY(24px);
+  height: 100%;
+  width: 1.3px;
+  background: #c7c7c7;
+  border-radius: 2px;
+  animation-direction: reverse;
+  animation-timing-function: linear;
+  animation-iteration-count: infinite;
+  animation-name: fly;
+  animation-duration: 0.5s;
+}
+
+@keyframes fly {
+  0% {
+    opacity: 0;
+    transform: translateY(24px);
+  }
+  10% {
+    opacity: 0;
+  }
+  50% {
+    opacity: 0.5;
+  }
+  90% {
+    opacity: 0;
+  }
+  100% {
+    opacity: 0;
+    transform: translateY(-24px);
+  }
+}
+
+.air:nth-child(1) {
+  animation-delay: 0.3s;
+}
+
+.air:nth-child(2) {
+  animation-delay: 0.42s;
+  z-index: -1;
+}
+
+.air:nth-child(3) {
+  animation-delay: 0.51s;
+  z-index: -1;
+}
+
+.air:nth-child(4) {
+  animation-delay: 0.21s;
+}
+
+.air:nth-child(5) {
+  animation-delay: 0.3s;
+  z-index: -1;
+}
+
+.air:nth-child(6) {
+  animation-delay: 0.33s;
+}
+
+.air:nth-child(7) {
+  animation-delay: 0.44s;
+  z-index: -1;
+}
+
+.air:nth-child(8) {
+  animation-delay: 0.15s;
+}
+
+.air:nth-child(9) {
+  animation-delay: 0.31s;
+}
+
+.air:nth-child(10) {
+  animation-delay: 0.27s;
+  z-index: -1;
+}
+
+.air:nth-child(11) {
+  z-index: -1;
+  animation-delay: 0.36s;
+}

@@ -1,0 +1,21 @@
+{
+  "name": "server",
+  "version": "0.0.0",
+  "license": "UNLICENSED",
+  "module": "src/app.ts",
+  "dependencies": {
+    "@elysiajs/cors": "1.0.2",
+    "elysia": "1.0.14",
+    "~core": "workspace:*"
+  },
+  "devDependencies": {
+    "eslint-config-custom": "workspace:*",
+    "dts-bundle-generator": "https://github.com/Turbo-Rent/dts-bundle-generator",
+    "tsconfig": "workspace:*"
+  },
+  "scripts": {
+    "dev": "bun run --watch src/app.ts",
+    "start": "bun run src/app.ts",
+    "lint": "eslint . && tsc --noemit"
+  }
+}

@@ -1,0 +1,10 @@
+{
+  "name": "~api",
+  "version": "0.0.0",
+  "private": true,
+  "type": "module",
+  "dependencies": {
+    "@elysiajs/eden": "1.0.14"
+  },
+  "devDependencies": {}
+}

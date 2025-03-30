@@ -1,0 +1,30 @@
+{
+  "extends": [
+    "tsconfig/base.json",
+    "./.svelte-kit/tsconfig.json"
+  ],
+  "include": [
+    "scss.d.ts",
+    "**/*.ts",
+    "**/*.svelte",
+    ".svelte-kit/types/**/*.ts",
+    ".svelte-kit/ambient.d.ts"
+  ],
+  "exclude": [
+    "node_modules",
+    "../extension/**/*.ts"
+  ],
+  "compilerOptions": {
+    "target": "ES2021",
+    "types": [
+      "bun-types",
+      "chrome"
+    ],
+    "strictNullChecks": true,
+    "strictPropertyInitialization": false,
+    "allowSyntheticDefaultImports": true,
+    "verbatimModuleSyntax": true,
+    "experimentalDecorators": true,
+    "emitDecoratorMetadata": true
+  }
+}

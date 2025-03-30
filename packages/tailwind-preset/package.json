@@ -1,0 +1,12 @@
+{
+  "name": "tailwind-preset",
+  "version": "0.0.0",
+  "private": true,
+  "main": "index.js",
+  "license": "UNLICENSED",
+  "devDependencies": {
+  },
+  "publishConfig": {
+    "access": "public"
+  }
+}

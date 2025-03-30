@@ -1,0 +1,15 @@
+{
+  "name": "~ui",
+  "version": "0.0.0",
+  "private": true,
+  "type": "module",
+  "dependencies": {
+    "svelte": "4.2.9",
+    "svelte-portal": "2.2.1",
+    "svelte-tel-input": "3.5.2"
+  },
+  "devDependencies": {
+    "eslint-config-custom": "workspace:*",
+    "tailwind-preset": "workspace:*"
+  }
+}

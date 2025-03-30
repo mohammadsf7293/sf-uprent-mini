@@ -1,0 +1,16 @@
+{
+  "extends": "tsconfig/base.json",
+  "include": [
+    "./origin",
+    "extension.ts",
+    "index.ts"
+  ],
+  "compilerOptions": {
+    "target": "esnext",
+    "module": "esnext",
+    "lib": [
+      "DOM",
+      "ESNext"
+    ]
+  }
+}

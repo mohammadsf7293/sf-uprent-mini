@@ -1,0 +1,21 @@
+@import '~ui/styles/tailwind';
+
+.uprent {
+  box-sizing: border-box !important;
+  font-family: 'Poppins', sans-serif;
+  outline: none;
+}
+
+button.uprent {
+  border-style: solid !important;
+  border-width: 0;
+  cursor: pointer;
+}
+
+input.uprent {
+  border-style: solid !important;
+}
+
+.uprent-hidden {
+  display: none !important;
+}

@@ -1,0 +1,38 @@
+{
+  "extends": "tsconfig/base.json",
+  "exclude": [
+    "node_modules",
+  ],
+  "include": [
+    "src"
+  ],
+  "compilerOptions": {
+    "target": "esnext",
+    "module": "esnext",
+    "moduleResolution": "node",
+    "lib": [
+      "dom",
+      "esnext"
+    ],
+    "types": [
+      "bun-types",
+    ],
+    "allowJs": false,
+    "declaration": true,
+    "esModuleInterop": true,
+    "forceConsistentCasingInFileNames": true,
+    "strict": true,
+    "strictPropertyInitialization": false,
+    "skipLibCheck": true,
+    "experimentalDecorators": true,
+    "emitDecoratorMetadata": true,
+    "paths": {
+      "@/*": [
+        "./src/*"
+      ],
+      "@schemas": [
+        "./types/schemas.ts"
+      ]
+    }
+  }
+}

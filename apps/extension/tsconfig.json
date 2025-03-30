@@ -1,0 +1,52 @@
+{
+  "extends": [
+    "tsconfig/base.json",
+    "@tsconfig/svelte/tsconfig.json"
+  ],
+  "compilerOptions": {
+    "target": "ESNext",
+    "useDefineForClassFields": true,
+    "module": "ESNext",
+    "resolveJsonModule": true,
+    "isolatedModules": true,
+    "strictPropertyInitialization": false,
+    "allowJs": true,
+    "checkJs": true,
+    "verbatimModuleSyntax": true,
+    "emitDecoratorMetadata": true,
+    "experimentalDecorators": true,
+    "lib": [
+      "DOM",
+      "ESNext"
+    ],
+    "types": [
+      "chrome"
+    ],
+    "paths": {
+      "@app/*": [
+        "./src/app/*"
+      ],
+      "@features/*": [
+        "./src/features/*"
+      ],
+      "@features": [
+        "./src/features"
+      ],
+      "@widgets/*": [
+        "./src/widgets/*"
+      ],
+      "@widgets": [
+        "./src/widgets"
+      ],
+      "@shared/*": [
+        "./src/shared/*"
+      ]
+    }
+  },
+  "include": [
+    "src/**/*.ts",
+    "src/**/*.svelte",
+    "config/**/*.ts",
+    "vite.config.ts"
+  ]
+}

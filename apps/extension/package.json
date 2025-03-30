@@ -1,0 +1,35 @@
+{
+  "name": "extension",
+  "private": true,
+  "version": "1",
+  "type": "module",
+  "scripts": {
+    "build": "conc \"vite build --mode dev-local\" \"vite build --mode service-worker\"",
+    "dev": "conc \"vite build --watch --mode dev-local\" \"vite build --watch --mode service-worker\"",
+    "lint": "eslint . && svelte-check --tsconfig ./tsconfig.json"
+  },
+  "devDependencies": {
+    "@fontsource/poppins": "5.0.8",
+    "@sveltejs/vite-plugin-svelte": "3.1.0",
+    "@tsconfig/svelte": "5.0.4",
+    "@types/chrome": "0.0.259",
+    "@types/fs-extra": "11.0.4",
+    "autoprefixer": "10.4.19",
+    "concurrently": "8.2.2",
+    "eslint-config-custom": "workspace:*",
+    "eslint-plugin-svelte": "2.39.0",
+    "fs-extra": "11.2.0",
+    "postcss": "8.4.40",
+    "sass": "1.70.0",
+    "svelte": "4.2.17",
+    "svelte-check": "3.7.1",
+    "tailwind-preset": "workspace:*",
+    "tailwindcss": "3.4.7",
+    "tsconfig": "workspace:*",
+    "vite": "5.2.11",
+    "vite-tsconfig-paths": "4.3.2",
+    "~api": "workspace:*",
+    "~core": "workspace:*",
+    "~ui": "workspace:*"
+  }
+}

@@ -1,0 +1,29 @@
+{
+  "name": "uprent-mini",
+  "version": "1.62.0",
+  "devDependencies": {
+    "bun-types": "1.2.7",
+    "prettier": "latest",
+    "prettier-plugin-svelte": "3.2.5",
+    "prettier-plugin-tailwindcss": "0.6.5",
+    "turbo": "2.0.11",
+    "typescript": "5.3.3"
+  },
+  "engines": {
+    "node": ">=16.8.0"
+  },
+  "scripts": {
+    "gen": "bun run apps/server/generate-types.ts",
+    "lint:web": "cd apps/web && bun lint",
+    "lint:server": "cd apps/server && bun lint",
+    "lint:extension": "cd apps/extension && bun lint",
+    "lint:all": "conc \"bun lint:web\" \"bun lint:server\" \"bun lint:extension\"",
+    "format": "bun -b run prettier --log-level 'warn' --write '**/*.{ts,tsx,scss,html,svelte}'"
+  },
+  "packageManager": "bun@1.2.7",
+  "private": true,
+  "workspaces": [
+    "apps/*",
+    "packages/*"
+  ]
+}

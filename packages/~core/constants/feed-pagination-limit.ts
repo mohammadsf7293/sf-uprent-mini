@@ -1,0 +1,1 @@
+export const FEED_PAGINATION_LIMIT = 20

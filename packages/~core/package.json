@@ -1,0 +1,13 @@
+{
+  "name": "~core",
+  "version": "0.0.0",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "lint": "eslint . && tsc --noemit"
+  },
+  "dependencies": {},
+  "devDependencies": {
+    "eslint-config-custom": "workspace:*"
+  }
+}

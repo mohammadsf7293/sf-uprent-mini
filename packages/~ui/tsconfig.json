@@ -1,0 +1,31 @@
+{
+  "extends": [
+    "tsconfig/base.json",
+  ],
+  "compilerOptions": {
+    "target": "ESNext",
+    "useDefineForClassFields": true,
+    "module": "ESNext",
+    "moduleResolution": "Node",
+    "resolveJsonModule": true,
+    "isolatedModules": true,
+    "strictPropertyInitialization": false,
+    "allowJs": true,
+    "checkJs": true,
+    "experimentalDecorators": true,
+    "emitDecoratorMetadata": true,
+    "lib": [
+      "DOM"
+    ],
+    "types": [
+      "bun-types"
+    ]
+  },
+  "include": [
+    "assets/index.ts",
+    "assets/**/*.svelte",
+    "components/**/*.ts",
+    "components/**/*.svelte",
+    "global-declarations.d.ts",
+  ]
+}
