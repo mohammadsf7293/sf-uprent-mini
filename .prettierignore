@@ -1,0 +1,8 @@
+/node_modules
+/.idea
+.svelte-kit
+.build
+apps/server/generated/schemas.ts
+apps/server/types/app.d.ts
+packages/~api/elysia/app.d.ts
+apps/server/src/routes/user/commute/lib/city-zones.ts
