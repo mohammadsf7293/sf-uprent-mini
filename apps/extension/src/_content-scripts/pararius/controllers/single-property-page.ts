@@ -1,5 +1,5 @@
 import { SinglePropertyPageController } from '@features'
-import { CommuteTime } from '@widgets'
+import { CommuteTime } from '~ui/components'
 
 class ParariusController extends SinglePropertyPageController {
   initialized = false
@@ -35,6 +35,9 @@ class ParariusController extends SinglePropertyPageController {
 
     new CommuteTime({
       target: travelTimeTarget,
+      props: {
+        mode: 'extension'
+      }
     })
   }
 }

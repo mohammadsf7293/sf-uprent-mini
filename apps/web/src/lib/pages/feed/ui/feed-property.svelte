@@ -1,7 +1,7 @@
 <script lang="ts">
   import { CashSVG, DimensionsSVG } from '~ui/assets'
   import type { Property } from '~core/database'
-  import { CommuteTime } from '$lib/widgets'
+  import { CommuteTime } from '~ui/components'
 
   export let property: Property
 </script>
@@ -51,5 +51,5 @@
       {/if}
     </div>
   </div>
-  <CommuteTime />
+  <CommuteTime mode="web" />
 </div>

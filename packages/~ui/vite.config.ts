@@ -6,7 +6,11 @@ import tsconfigPaths from 'vite-tsconfig-paths'
 export default defineConfig({
   plugins: [
     tsconfigPaths(),
-    svelte()
+    svelte({
+      compilerOptions: {
+        customElement: false
+      }
+    })
   ],
   build: {
     lib: {
@@ -15,7 +19,7 @@ export default defineConfig({
       fileName: 'index'
     },
     rollupOptions: {
-      external: ['svelte'],
+      external: ['svelte', '~api'],
       output: {
         globals: {
           svelte: 'Svelte'
@@ -26,7 +30,8 @@ export default defineConfig({
   resolve: {
     alias: {
       '~core': resolvePath(__dirname, '../~core'),
-      '~ui': resolvePath(__dirname, '.')
+      '~ui': resolvePath(__dirname, '.'),
+      '~api': resolvePath(__dirname, '../~api')
     }
   }
 }) 

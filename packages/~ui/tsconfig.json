@@ -20,7 +20,8 @@
     ],
     "types": [
       "bun-types",
-      "svelte"
+      "svelte",
+      "chrome"
     ]
   },
   "include": [
