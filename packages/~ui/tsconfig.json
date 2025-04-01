@@ -1,6 +1,7 @@
 {
   "extends": [
     "tsconfig/base.json",
+    "@tsconfig/svelte/tsconfig.json"
   ],
   "compilerOptions": {
     "target": "ESNext",
@@ -18,7 +19,8 @@
       "DOM"
     ],
     "types": [
-      "bun-types"
+      "bun-types",
+      "svelte"
     ]
   },
   "include": [
