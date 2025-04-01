@@ -9,12 +9,20 @@
 
   const load = async () => {
     loading = true
-    const { data, error } = await api.commute.durations.get()
-    loading = false
+    try {
+      const response = await chrome.runtime.sendMessage({ action: "fetchDurations" })
+      console.log('background response', response);
 
-    if (error || data.status === 'error') return
-
-    durations = data.payload.durations
+      if (!response.success) {
+        console.error('Failed to load commute durations:', response.error)
+        return
+      }
+      durations = response.data.payload.durations
+    } catch (error) {
+      console.error('Error loading commute durations:', error)
+    } finally {
+      loading = false
+    }
   }
 </script>
 
