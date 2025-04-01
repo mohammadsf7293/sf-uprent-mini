@@ -9,7 +9,6 @@
     loading = true
     try {
       const response = await chrome.runtime.sendMessage({ action: "fetchDurations" })
-      console.log('background response', response);
 
       if (!response.success) {
         console.error('Failed to load commute durations:', response.error)
