@@ -50,7 +50,12 @@ export default defineConfig(({ mode }): UserConfig => {
         ignoreConfigErrors: true,
       }),
       preprocessFonts(),
-      svelte(),
+      svelte({
+        include: [
+          '**/*.svelte',
+          '../../packages/~ui/**/*.svelte',
+        ],
+      }),
       {
         name: 'post-build-hooks',
         async buildEnd() {

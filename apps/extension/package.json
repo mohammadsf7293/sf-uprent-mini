@@ -4,7 +4,7 @@
   "version": "1",
   "type": "module",
   "scripts": {
-    "build": "conc \"vite build --mode dev-local\" \"vite build --mode service-worker\"",
+    "build": "cd ../../packages/~ui && bun run build && cd ../../apps/extension && conc \"vite build --mode dev-local\" \"vite build --mode service-worker\"",
     "dev": "conc \"vite build --watch --mode dev-local\" \"vite build --watch --mode service-worker\"",
     "lint": "eslint . && svelte-check --tsconfig ./tsconfig.json"
   },
