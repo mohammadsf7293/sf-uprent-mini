@@ -2,11 +2,29 @@
   import type { Durations } from '~core/database'
   import { RouteSVG } from '~ui/assets'
   import { Button } from '~ui/components'
+  import { addresses } from '~ui/stores/addresses'
   import { slide } from 'svelte/transition'
+  import AddressSelectionModal from './address-selection-modal.svelte'
 
   export let loading = false
   export let durations: Durations | null = null
-  export let onLoad: () => Promise<void>
+  export let onLoad: (address: string) => Promise<void>
+
+  let showAddressModal = false
+
+  async function handleLoadClick() {
+    if ($addresses.length === 0) return
+    
+    if ($addresses.length === 1) {
+      await onLoad($addresses[0])
+    } else {
+      showAddressModal = true
+    }
+  }
+
+  async function handleAddressSelect(address: string) {
+    await onLoad(address)
+  }
 </script>
 
 {#if durations}
@@ -33,10 +51,22 @@
     </div>
 
     <div class=".flex">
-      <Button primary {loading} onClick={onLoad} class=".w-fit">
+      <Button 
+        primary 
+        {loading} 
+        onClick={handleLoadClick} 
+        disabled={$addresses.length === 0}
+        class=".w-fit"
+      >
         <RouteSVG slot="icon" />
         Load commutes
       </Button>
     </div>
   </div>
-{/if} 
+{/if}
+
+<AddressSelectionModal 
+  isOpen={showAddressModal} 
+  onSelect={handleAddressSelect}
+  on:close={() => showAddressModal = false}
+/> 
