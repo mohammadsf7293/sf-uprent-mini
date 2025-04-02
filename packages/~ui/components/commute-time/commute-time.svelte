@@ -7,6 +7,7 @@
   export let mode: 'web' | 'extension' = 'web'
   export let loading = false
   export let durations: Durations | null = null
+  export let onLoad: (address: string) => Promise<void>
 
   const load = async () => {
     loading = true
@@ -32,7 +33,7 @@
 </script>
 
 {#if mode === 'web'}
-  <WebMode {loading} {durations} onLoad={load} />
+  <WebMode {loading} {durations} {onLoad} />
 {:else}
   <ExtensionMode {loading} {durations} onLoad={load} />
 {/if} 

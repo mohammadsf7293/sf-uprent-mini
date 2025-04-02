@@ -3,21 +3,32 @@
   import { RouteSVG } from '~ui/assets'
   import { Button } from '~ui/components'
   import { addresses } from '~ui/stores/addresses'
+  import AddressSelectionModal from './address-selection-modal.svelte'
 
   export let loading = false
   export let durations: Durations | null = null
-  export let onLoad: () => Promise<void>
+  export let onLoad: (address: string) => Promise<void>
+
+  let showAddressModal = false
 
   async function handleLoadClick() {
-    if ($addresses.length > 0) {
-      await onLoad()
+    if ($addresses.length === 0) return
+    
+    if ($addresses.length === 1) {
+      await onLoad($addresses[0])
+    } else {
+      showAddressModal = true
     }
+  }
+
+  async function handleAddressSelect(address: string) {
+    await onLoad(address)
   }
 </script>
 
 <div class=".flex .flex-col .gap-4 .p-4 .bg-white .rounded-lg .shadow-sm .border .border-gray-200 .h-[90%]">
   <div class=".flex .items-center .gap-2">
-    <RouteSVG class=".w-5 .h-5 .text-primary-600" />
+    <RouteSVG />
     <h3 class=".text-lg .font-semibold .text-gray-900">Commute Times</h3>
   </div>
 
@@ -46,4 +57,10 @@
       <div class=".absolute .bottom-0 .left-0 .right-0 .h-8 .bg-gradient-to-t .from-white .via-white/95 .to-transparent .pointer-events-none" />
     </div>
   {/if}
+
+  <AddressSelectionModal 
+    isOpen={showAddressModal} 
+    onSelect={handleAddressSelect}
+    on:close={() => showAddressModal = false}
+  />
 </div> 

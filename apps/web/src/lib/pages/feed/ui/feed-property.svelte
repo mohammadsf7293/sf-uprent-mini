@@ -6,6 +6,24 @@
 
   export let property: Property
   let durations: Durations | null = null
+
+  async function handleLoad(address: string) {
+    try {
+      const response = await fetch('http://localhost:5002/commute/durations', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ address }),
+      })
+      const data = await response.json()
+      if (data.status === 'success') {
+        durations = data.payload.durations
+      }
+    } catch (error) {
+      console.error('Failed to fetch commute times:', error)
+    }
+  }
 </script>
 
 <div
@@ -53,15 +71,8 @@
       {/if}
     </div>
   </div>
-  <CommuteTime mode="web"durations={durations} onLoad={async () => {
-    try {
-      const response = await fetch('http://localhost:5002/commute/durations')
-      const data = await response.json()
-      if (data.status === 'success') {
-        durations = data.payload.durations
-      }
-    } catch (error) {
-      console.error('Failed to fetch commute times:', error)
-    }
-  }} />
+  <CommuteTime 
+    durations={durations} 
+    onLoad={handleLoad}
+  />
 </div>

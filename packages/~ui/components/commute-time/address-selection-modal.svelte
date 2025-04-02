@@ -4,13 +4,9 @@
   import { addresses } from '~ui/stores/addresses'
 
   export let isOpen = false
-  // export let addresses: string[] = []
+  export let onSelect: (address: string) => void
 
   const dispatch = createEventDispatcher()
-
-  function selectAddress(address: string) {
-    dispatch('select', address)
-  }
 
   function closeModal() {
     dispatch('close')
@@ -20,14 +16,17 @@
 {#if isOpen}
   <div class=".fixed .inset-0 .bg-black/50 .flex .items-center .justify-center .z-50">
     <div class=".bg-white .rounded-lg .p-4 .w-[400px] .max-w-[90vw]">
-      <h3 class=".text-lg .font-semibold .mb-4 .text-black">Select Source Address</h3>
+      <h3 class=".text-lg .font-semibold .mb-4">Select Starting Address</h3>
       
       <div class=".space-y-4">
         <div class=".space-y-2">
           {#each $addresses as address}
-            <button
-              class=".w-full .text-left .p-3 .bg-gray-50 .rounded .text-black .hover:bg-gray-100"
-              on:click={() => selectAddress(address)}
+            <button 
+              class=".w-full .text-left .p-3 .bg-gray-50 .rounded .hover:bg-gray-100 .transition-colors"
+              on:click={() => {
+                onSelect(address)
+                closeModal()
+              }}
             >
               {address}
             </button>

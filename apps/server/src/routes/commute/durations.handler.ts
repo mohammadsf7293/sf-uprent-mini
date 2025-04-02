@@ -7,9 +7,20 @@ const resDTO = t.Object({
   durations: DurationsSchema,
 })
 
-export const commuteDurationsEndpointHandler = app.get(
+const reqDTO = t.Object({
+  address: t.String(),
+})
+
+export const commuteDurationsEndpointHandler = app.post(
   '/durations',
-  ({ res }) => {
+  ({ body }) => {
+    if (!body.address) {
+      return {
+        status: 'error',
+        message: 'Address is required',
+      }
+    }
+
     // mock commute times
     const durations: Durations = {
       walking: randomInt(45, 90),
@@ -18,9 +29,15 @@ export const commuteDurationsEndpointHandler = app.get(
       transit: randomInt(10, 30),
     }
 
-    return res.ok({
-      durations,
-    })
+    return {
+      status: 'success',
+      payload: {
+        durations,
+      },
+    }
   },
-  { response: res(resDTO) },
+  { 
+    body: reqDTO,
+    response: res(resDTO) 
+  },
 )
