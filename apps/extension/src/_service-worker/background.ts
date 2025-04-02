@@ -3,7 +3,7 @@ import api from '~api'
 chrome.runtime.onMessage.addListener((message, sender, sendResponse) => {
   // console.log('message', message)
   if (message.action === "fetchDurations") {
-    api.commute.durations.get()
+    api.commute.durations.post({ address: message.address })
       .then(response => {
         sendResponse({ success: true, data: response.data })
       })
