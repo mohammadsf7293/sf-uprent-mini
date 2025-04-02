@@ -1,21 +1,12 @@
 <script lang="ts">
   import { createEventDispatcher } from 'svelte'
   import { Button } from '~ui/components'
-  import { onMount } from 'svelte'
+  import { addresses } from '~ui/stores/addresses'
 
   export let isOpen = false
-  let addresses: string[] = []
-  let newAddress = ''
-  
-  const dispatch = createEventDispatcher()
 
-  onMount(() => {
-    // Load addresses from localStorage
-    const storedAddresses = localStorage.getItem('commute_addresses')
-    if (storedAddresses) {
-      addresses = JSON.parse(storedAddresses)
-    }
-  })
+  const dispatch = createEventDispatcher()
+  let newAddress = ''
   
   // Mock suggestions for demo
   const mockSuggestions = [
@@ -56,17 +47,15 @@
   }
 
   function addAddress() {
-    if (newAddress && addresses.length < 2) {
-      addresses = [...addresses, newAddress]
-      localStorage.setItem('commute_addresses', JSON.stringify(addresses))
+    if (newAddress && $addresses.length < 2) {
+      addresses.update(addr => [...addr, newAddress])
       newAddress = ''
       showSuggestions = false
     }
   }
 
   function removeAddress(address: string) {
-    addresses = addresses.filter(addr => addr !== address)
-    localStorage.setItem('commute_addresses', JSON.stringify(addresses))
+    addresses.update(addr => addr.filter(a => a !== address))
   }
 
   function closeModal() {
@@ -83,11 +72,11 @@
       
       <div class=".space-y-4">
         <!-- Current addresses -->
-        {#if addresses.length > 0}
+        {#if $addresses.length > 0}
           <div class=".space-y-2">
-            {#each addresses as address}
+            {#each $addresses as address}
               <div class=".flex .items-center .justify-between .p-2 .bg-gray-50 .rounded">
-                <span class=".text-sm .text-black">{address}</span>
+                <span class=".text-sm .text-gray-900">{address}</span>
                 <button 
                   class=".text-red-500 .hover:text-red-700" 
                   on:click={() => removeAddress(address)}
@@ -100,21 +89,21 @@
         {/if}
 
         <!-- Add new address -->
-        {#if addresses.length < 2}
+        {#if $addresses.length < 2}
           <div class=".relative">
             <input
               type="text"
               placeholder="Enter an address"
               bind:value={newAddress}
               on:input={handleInput}
-              class=".w-full .p-2 .border .rounded .text-sm .text-black"
+              class=".w-full .p-2 .border .rounded .text-sm .text-gray-900 .bg-white"
             />
             
             {#if showSuggestions && filteredSuggestions.length > 0}
               <div class=".absolute .left-0 .right-0 .mt-1 .bg-white .border .rounded .shadow-lg .z-10">
                 {#each filteredSuggestions as suggestion}
                   <button
-                    class=".w-full .text-left .p-2 .text-sm .text-black .hover:bg-gray-50"
+                    class=".w-full .text-left .p-2 .text-sm .text-gray-900 .hover:bg-gray-50"
                     on:click={() => selectSuggestion(suggestion)}
                   >
                     {suggestion}
@@ -126,7 +115,7 @@
             <Button 
               primary
               onClick={addAddress}
-              disabled={!newAddress || addresses.length >= 2}
+              disabled={!newAddress || $addresses.length >= 2}
               class=".mt-2"
             >
               Add Address

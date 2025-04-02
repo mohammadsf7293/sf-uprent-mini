@@ -1,9 +1,9 @@
 <script lang="ts">
   import { createEventDispatcher } from 'svelte'
   import { Button } from '~ui/components'
+  import { addresses } from '~ui/stores/addresses'
 
   export let isOpen = false
-  export let addresses: string[] = []
 
   const dispatch = createEventDispatcher()
   let newAddress = ''
@@ -47,15 +47,15 @@
   }
 
   function addAddress() {
-    if (newAddress && addresses.length < 2) {
-      dispatch('addAddress', newAddress)
+    if (newAddress && $addresses.length < 2) {
+      addresses.update(addr => [...addr, newAddress])
       newAddress = ''
       showSuggestions = false
     }
   }
 
   function removeAddress(address: string) {
-    dispatch('removeAddress', address)
+    addresses.update(addr => addr.filter(a => a !== address))
   }
 
   function closeModal() {
@@ -72,9 +72,9 @@
       
       <div class=".space-y-4">
         <!-- Current addresses -->
-        {#if addresses.length > 0}
+        {#if $addresses.length > 0}
           <div class=".space-y-2">
-            {#each addresses as address}
+            {#each $addresses as address}
               <div class=".flex .items-center .justify-between .p-2 .bg-gray-50 .rounded">
                 <span class=".text-sm">{address}</span>
                 <button 
@@ -89,7 +89,7 @@
         {/if}
 
         <!-- Add new address -->
-        {#if addresses.length < 2}
+        {#if $addresses.length < 2}
           <div class=".relative">
             <input
               type="text"
@@ -115,7 +115,7 @@
             <Button 
               primary
               onClick={addAddress}
-              disabled={!newAddress || addresses.length >= 2}
+              disabled={!newAddress || $addresses.length >= 2}
               class=".mt-2"
             >
               Add Address

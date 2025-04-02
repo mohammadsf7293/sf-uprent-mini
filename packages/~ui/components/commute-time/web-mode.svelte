@@ -2,10 +2,17 @@
   import type { Durations } from '~core/database'
   import { RouteSVG } from '~ui/assets'
   import { Button } from '~ui/components'
+  import { addresses } from '~ui/stores/addresses'
 
   export let loading = false
   export let durations: Durations | null = null
   export let onLoad: () => Promise<void>
+
+  async function handleLoadClick() {
+    if ($addresses.length > 0) {
+      await onLoad()
+    }
+  }
 </script>
 
 <div class=".flex .flex-col .gap-4 .p-4 .bg-white .rounded-lg .shadow-sm .border .border-gray-200 .h-[90%]">
@@ -15,7 +22,12 @@
   </div>
 
   {#if !durations}
-    <Button primary {loading} onClick={onLoad}>
+    <Button 
+      primary 
+      {loading} 
+      onClick={handleLoadClick}
+      disabled={$addresses.length === 0}
+    >
       <RouteSVG slot="icon" />
       Load commutes
     </Button>

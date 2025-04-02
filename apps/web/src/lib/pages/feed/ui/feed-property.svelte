@@ -2,8 +2,10 @@
   import { CashSVG, DimensionsSVG } from '~ui/assets'
   import type { Property } from '~core/database'
   import { CommuteTime } from '~ui/components'
+  import type { Durations } from '~core/database'
 
   export let property: Property
+  let durations: Durations | null = null
 </script>
 
 <div
@@ -51,5 +53,15 @@
       {/if}
     </div>
   </div>
-  <CommuteTime mode="web" />
+  <CommuteTime mode="web"durations={durations} onLoad={async () => {
+    try {
+      const response = await fetch('http://localhost:5002/commute/durations')
+      const data = await response.json()
+      if (data.status === 'success') {
+        durations = data.payload.durations
+      }
+    } catch (error) {
+      console.error('Failed to fetch commute times:', error)
+    }
+  }} />
 </div>
