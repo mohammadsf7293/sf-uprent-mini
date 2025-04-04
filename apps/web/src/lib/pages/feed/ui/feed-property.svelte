@@ -3,22 +3,17 @@
   import type { Property } from '~core/database'
   import { CommuteTime } from '~ui/components'
   import type { Durations } from '~core/database'
+  import api from '~api'
+  import { addresses } from '~ui/stores/addresses'
 
   export let property: Property
-  let durations: Durations | null = null
+  let durations: Record<string, Durations> | null = null
 
-  async function handleLoad(address: string) {
+  async function handleLoad() {
     try {
-      const response = await fetch('http://localhost:5002/commute/durations', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({ address }),
-      })
-      const data = await response.json()
-      if (data.status === 'success') {
-        durations = data.payload.durations
+      const response = await api.commute.durations.post({ addresses: $addresses })
+      if (response.data?.status === 'success') {
+        durations = response.data.payload.durations
       }
     } catch (error) {
       console.error('Failed to fetch commute times:', error)
@@ -72,7 +67,7 @@
     </div>
   </div>
   <CommuteTime 
-    durations={durations} 
+    durations={durations?.[$addresses[0]]} 
     onLoad={handleLoad}
   />
 </div>

@@ -3,26 +3,31 @@
   import { RouteSVG } from '~ui/assets'
   import { Button } from '~ui/components'
   import { addresses } from '~ui/stores/addresses'
-  import AddressSelectionModal from './address-selection-modal.svelte'
+  import DurationsModal from './durations-modal.svelte'
+  import api from '~api'
 
   export let loading = false
   export let durations: Durations | null = null
   export let onLoad: (address: string) => Promise<void>
 
-  let showAddressModal = false
+  let showDurationsModal = false
+  let allDurations: Record<string, Durations> | null = null
 
   async function handleLoadClick() {
     if ($addresses.length === 0) return
     
-    if ($addresses.length === 1) {
-      await onLoad($addresses[0])
-    } else {
-      showAddressModal = true
+    loading = true
+    try {
+      const response = await api.commute.durations.post({ addresses: $addresses })
+      if (response.data?.status === 'success') {
+        allDurations = response.data.payload.durations
+        showDurationsModal = true
+      }
+    } catch (error) {
+      console.error('Failed to fetch commute times:', error)
+    } finally {
+      loading = false
     }
-  }
-
-  async function handleAddressSelect(address: string) {
-    await onLoad(address)
   }
 </script>
 
@@ -46,10 +51,10 @@
     <div class=".relative .flex-1 .min-h-0">
       <div class=".absolute .inset-0 .overflow-y-auto">
         <div class=".grid .grid-cols-1 .sm:grid-cols-2 .gap-2">
-          {#each Object.entries(durations) as [destination, duration]}
+          {#each Object.entries(durations) as [mode, duration]}
             <div class=".flex .items-center .justify-between .p-2 .bg-gray-50 .rounded-md">
-              <span class=".text-sm .font-medium .text-gray-700">{destination}</span>
-              <span class=".text-sm .font-semibold .text-primary-600">{duration}</span>
+              <span class=".text-sm .font-medium .text-gray-700">{mode}</span>
+              <span class=".text-sm .font-semibold .text-primary-600">{duration} min</span>
             </div>
           {/each}
         </div>
@@ -58,9 +63,9 @@
     </div>
   {/if}
 
-  <AddressSelectionModal 
-    isOpen={showAddressModal} 
-    onSelect={handleAddressSelect}
-    on:close={() => showAddressModal = false}
+  <DurationsModal 
+    isOpen={showDurationsModal}
+    durations={allDurations}
+    on:close={() => showDurationsModal = false}
   />
 </div> 

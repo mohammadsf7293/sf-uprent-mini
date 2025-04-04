@@ -39,7 +39,7 @@ chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
   }
   
   if (request.action === "fetchDurations") {
-    api.commute.durations.post({ address: request.address })
+    api.commute.durations.post({ addresses: request.addresses })
       .then(response => {
         sendResponse({ success: true, data: response.data })
       })
