@@ -68,8 +68,8 @@
 </script>
 
 {#if isOpen}
-  <div class=".fixed .inset-0 .bg-black/50 .flex .items-center .justify-center .z-50">
-    <div class=".bg-white .rounded-lg .p-4 .w-[400px] .max-w-[90vw]">
+  <div class=".fixed .inset-0 .bg-black/50 .flex .items-center .justify-center .z-[9999]">
+    <div class=".bg-white .rounded-lg .p-4 .w-[400px] .max-w-[90vw] .relative .z-[10000]">
       <div class=".space-y-4">
         <!-- Address management section -->
         <div class=".space-y-2">
@@ -139,7 +139,7 @@
                 type="number"
                 bind:value={$maxDurations.walking}
                 min="0"
-                class=".w-full .rounded-md .border-gray-300 .shadow-sm .text-gray-700"
+                class=".w-full .px-3 .py-2 .rounded-md .border .border-gray-300 .focus:border-primary-500 .focus:ring-2 .focus:ring-primary-200 .text-gray-700 .shadow-sm .transition-colors"
               />
             </div>
             <div class=".space-y-2">
@@ -149,7 +149,7 @@
                 type="number"
                 bind:value={$maxDurations.biking}
                 min="0"
-                class=".w-full .rounded-md .border-gray-300 .shadow-sm .text-gray-700"
+                class=".w-full .px-3 .py-2 .rounded-md .border .border-gray-300 .focus:border-primary-500 .focus:ring-2 .focus:ring-primary-200 .text-gray-700 .shadow-sm .transition-colors"
               />
             </div>
             <div class=".space-y-2">
@@ -159,7 +159,7 @@
                 type="number"
                 bind:value={$maxDurations.driving}
                 min="0"
-                class=".w-full .rounded-md .border-gray-300 .shadow-sm .text-gray-700"
+                class=".w-full .px-3 .py-2 .rounded-md .border .border-gray-300 .focus:border-primary-500 .focus:ring-2 .focus:ring-primary-200 .text-gray-700 .shadow-sm .transition-colors"
               />
             </div>
             <div class=".space-y-2">
@@ -169,7 +169,7 @@
                 type="number"
                 bind:value={$maxDurations.transit}
                 min="0"
-                class=".w-full .rounded-md .border-gray-300 .shadow-sm .text-gray-700"
+                class=".w-full .px-3 .py-2 .rounded-md .border .border-gray-300 .focus:border-primary-500 .focus:ring-2 .focus:ring-primary-200 .text-gray-700 .shadow-sm .transition-colors"
               />
             </div>
           </div>
