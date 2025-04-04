@@ -96,8 +96,14 @@ export async function setDataToChromeStorage(key: string, value: any): Promise<b
 
 const syncDataWithExtension = async () => {
   const chromeAddresses = await getDataFromChromeStorage('addresses');
+  const storedAddresses = localStorage.getItem('addresses');
   if (chromeAddresses) {
     addresses.set(chromeAddresses);
+  } else if (storedAddresses && !chromeAddresses) {
+    // The case when the extension has just been installed, and we need to migrate the data to extension storage
+    addresses.set(JSON.parse(storedAddresses));
+    // Set the addresses in Chrome storage
+    await setDataToChromeStorage('addresses', JSON.parse(storedAddresses));
   }
 }
 
