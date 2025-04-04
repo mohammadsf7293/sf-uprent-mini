@@ -94,6 +94,13 @@ export async function setDataToChromeStorage(key: string, value: any): Promise<b
   });
 }
 
+const syncDataWithExtension = async () => {
+  const chromeAddresses = await getDataFromChromeStorage('addresses');
+  if (chromeAddresses) {
+    addresses.set(chromeAddresses);
+  }
+}
+
 let firstSubscribed = true;
 // Subscribe to changes and update storage
 addresses.subscribe(async value => {
@@ -104,27 +111,16 @@ addresses.subscribe(async value => {
     const extensionInstalled = await isUprentExtensionInstalled();
     if (extensionInstalled) {
       if (firstSubscribed) {
-        const chromeAddresses = await getDataFromChromeStorage('addresses');
-        if (chromeAddresses) {
-          addresses.set(chromeAddresses);
-        }
+        syncDataWithExtension();
         firstSubscribed = false;
       } else {
         await setDataToChromeStorage('addresses', value);
       }
-      // await setDataToChromeStorage('addresses', value);
     } else {
       localStorage.setItem('addresses', JSON.stringify(value));
     }
   }
 });
-
-const syncDataWithExtension = async () => {
-  const chromeAddresses = await getDataFromChromeStorage('addresses');
-  if (chromeAddresses) {
-    addresses.set(chromeAddresses);
-  }
-}
 
 // Initialize from storage if available
 if (typeof window !== 'undefined') {
@@ -134,7 +130,7 @@ if (typeof window !== 'undefined') {
       if (extensionInstalled) {
         window.addEventListener("visibilitychange", async () => {
           if (!document.hidden) {
-            syncDataWithExtension().then(() => {
+              syncDataWithExtension().then(() => {
               console.log('synced data with extension');
             });
           }
