@@ -21,7 +21,7 @@
     try {
       if (typeof chrome !== 'undefined') {
         const response = await chrome.runtime.sendMessage({ 
-          action: "fetchDurations",
+          action: "FETCH_DURATIONS",
           addresses: $addresses
         })
         if (!response.success) {

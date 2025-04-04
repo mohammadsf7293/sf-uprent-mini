@@ -24,21 +24,19 @@ async function setStorageData(key: string, value: any) {
 // Listen for messages from content script
 chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
   if (request.type === 'GET_STORAGE_DATA') {
-    console.log('BACKGROUND_GET_STORAGE_DATA', request.key);
     getStorageData(request.key).then(response => {
       console.log('BACKGROUND_GET_STORAGE_DATA2', request.key, response);
       sendResponse(response);
     });
-    return true; // Will respond asynchronously
+    return true;
   }
   
   if (request.type === 'SET_STORAGE_DATA') {
-    console.log('BACKGROUND_SET_STORAGE_DATA', request.key, request.value);
     setStorageData(request.key, request.value).then(sendResponse);
-    return true; // Will respond asynchronously
+    return true;
   }
   
-  if (request.action === "fetchDurations") {
+  if (request.action === "FETCH_DURATIONS") {
     api.commute.durations.post({ addresses: request.addresses })
       .then(response => {
         sendResponse({ success: true, data: response.data })
@@ -46,6 +44,6 @@ chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
       .catch(error => {
         sendResponse({ success: false, error })
       })
-    return true // Keep message channel open for async response
+    return true
   }
 })

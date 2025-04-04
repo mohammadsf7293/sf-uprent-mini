@@ -14,7 +14,7 @@
     try {
       if (mode === 'extension' && typeof chrome !== 'undefined') {
         const response = await chrome.runtime.sendMessage({ 
-          action: "fetchDurations",
+          action: "FETCH_DURATIONS",
           address 
         })
         if (!response.success) {
