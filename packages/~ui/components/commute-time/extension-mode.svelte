@@ -8,7 +8,6 @@
 
   export let loading = false
   export let durations: Durations | null = null
-  export let onLoad: (address: string) => Promise<void>
 
   let showDurationsModal = false
   let showAddressModal = false
@@ -30,8 +29,6 @@
         }
         allDurations = response.data.payload.durations
         showDurationsModal = true
-      } else {
-        await onLoad($addresses[0])
       }
     } catch (error) {
       console.error('Error loading commute durations:', error)
