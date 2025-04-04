@@ -9,6 +9,7 @@
 
   const dispatch = createEventDispatcher()
   let newAddress = ''
+  let addressError = ''
   
   // Mock suggestions for demo
   const mockSuggestions = [
@@ -39,6 +40,7 @@
   function handleInput(event: Event) {
     const input = (event.target as HTMLInputElement).value
     newAddress = input
+    addressError = ''  // Clear error when input changes
     filterSuggestions(input)
     showSuggestions = true
   }
@@ -50,8 +52,13 @@
 
   function addAddress() {
     if (newAddress && $addresses.length < 2) {
+      if ($addresses.includes(newAddress)) {
+        addressError = 'This address is already added'
+        return
+      }
       addresses.update(addr => [...addr, newAddress])
       newAddress = ''
+      addressError = ''
       showSuggestions = false
     }
   }
@@ -101,8 +108,13 @@
                 bind:value={newAddress}
                 on:input={handleInput}
                 class=".w-full .p-2 .border .rounded .text-sm .text-gray-700"
+                class:border-red-500={addressError}
               />
               
+              {#if addressError}
+                <p class=".text-sm .text-red-500 .mt-1">{addressError}</p>
+              {/if}
+
               {#if showSuggestions && filteredSuggestions.length > 0}
                 <div class=".absolute .left-0 .right-0 .mt-1 .bg-white .border .rounded .shadow-lg .z-10">
                   {#each filteredSuggestions as suggestion}
