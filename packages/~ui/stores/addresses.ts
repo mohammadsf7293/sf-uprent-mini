@@ -19,17 +19,6 @@ export function isChromeEnvironment() {
     && isIEedge === false
     && (typeof winNav.userAgentData === "undefined" || winNav.userAgentData.brands.some(x => x.brand === "Google Chrome"));
 
-
-  console.log('Environment check:');
-  console.log('WinNav: ', winNav);
-  console.log('VendorName: ', vendorName);
-  console.log('IsOpera: ', isOpera);
-  console.log('IsFirefox: ', isFirefox);
-  console.log('IsIEedge: ', isIEedge);
-  console.log('IsGoogleChrome: ', isGoogleChrome);
-  console.log('- Is Chrome:', isGoogleChrome);
-  console.log('- Extension ID:', chrome.runtime?.id);
-
   return isGoogleChrome;
 }
 
@@ -130,30 +119,31 @@ addresses.subscribe(async value => {
   }
 });
 
+const syncDataWithExtension = async () => {
+  const chromeAddresses = await getDataFromChromeStorage('addresses');
+  if (chromeAddresses) {
+    addresses.set(chromeAddresses);
+  }
+}
+
 // Initialize from storage if available
 if (typeof window !== 'undefined') {
   const isChrome = isChromeEnvironment();
-  console.log('isChrome: ', isChrome);
   if (isChrome) {
     isUprentExtensionInstalled().then(async extensionInstalled => {
-      console.log('extensionInstalled: ', extensionInstalled);
       if (extensionInstalled) {
-        // Try to get addresses from Chrome storage first
-        const chromeAddresses = await getDataFromChromeStorage('addresses');
-        if (chromeAddresses) {
-          addresses.set(chromeAddresses);
-        }
+        window.addEventListener("visibilitychange", async () => {
+          if (!document.hidden) {
+            syncDataWithExtension().then(() => {
+              console.log('synced data with extension');
+            });
+          }
+        });
+        
+        syncDataWithExtension();
       }
     });
   }
-
-  // window.addEventListener("focus", () => {
-  //   console.log("Tab just became active (selected).");
-  // });
-
-  // window.onfocus = function () {
-  //   console.log('Tab just became active (selected).');
-  // };
 
   // Fallback to localStorage if Chrome storage is not available
   const storedAddresses = localStorage.getItem('addresses');
