@@ -8,7 +8,6 @@
 
   export let loading = false
   export let durations: Durations | null = null
-  export let onLoad: (address: string) => Promise<void>
 
   let showDurationsModal = false
   let allDurations: Record<string, Durations> | null = null
