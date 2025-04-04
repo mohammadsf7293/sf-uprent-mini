@@ -27,7 +27,7 @@ export async function isUprentExtensionInstalled(): Promise<boolean> {
   
       // Listen for the pong response
       const messageHandler = (event: MessageEvent) => {
-        if (event.data.type === 'uprent-extension-pong') {
+        if (event.data.type === 'PONG_UPRENT_EXTENSION') {
           console.log('content-script response received pong!')
           window.removeEventListener('message', messageHandler);
           clearTimeout(timeout);
@@ -38,7 +38,7 @@ export async function isUprentExtensionInstalled(): Promise<boolean> {
       window.addEventListener('message', messageHandler);
   
       // Send the ping
-      window.postMessage({ type: 'uprent-extension-ping' }, '*');
+      window.postMessage({ type: 'PING_UPRENT_EXTENSION' }, '*');
     });
   }
   
