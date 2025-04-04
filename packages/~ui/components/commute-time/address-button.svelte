@@ -1,5 +1,5 @@
 <script lang="ts">
-  import AddressModal from '~ui/components/address-modal'
+  import AddressModal from './address-modal.svelte'
   let showModal = false
 </script>
 

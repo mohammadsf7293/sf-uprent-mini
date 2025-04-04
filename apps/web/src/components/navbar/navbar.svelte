@@ -1,5 +1,5 @@
 <script lang="ts">
-  import { AddressButton } from '~ui/components/address-button'
+  import AddressButton from '~ui/components/commute-time/address-button.svelte'
 </script>
 
 <div class=".bg-[#bd2e4f] .text-white .px-10 .py-[5px] .h-[50px] .flex .items-center .justify-between .fixed .top-0 .left-0 .right-0 .z-50">
