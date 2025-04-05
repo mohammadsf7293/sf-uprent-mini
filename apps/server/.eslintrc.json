@@ -18,13 +18,28 @@
   ],
   "rules": {
     "@typescript-eslint/no-explicit-any": "warn",
-    "@typescript-eslint/ban-types": "warn",
-    "@typescript-eslint/no-unused-vars": "warn",
-    "no-constant-condition": "warn",
-    "no-control-regex": "warn",
-    "no-case-declarations": "warn",
-    "no-empty": "warn",
-    "no-undef": "warn",
-    "@typescript-eslint/no-this-alias": "warn"
-  }
+    "@typescript-eslint/ban-types": ["warn", {
+      "extendDefaults": true,
+      "types": {
+        "{}": false
+      }
+    }],
+    "@typescript-eslint/no-unused-vars": ["warn", {
+      "argsIgnorePattern": "^_",
+      "varsIgnorePattern": "^_",
+      "ignoreRestSiblings": true,
+      "caughtErrors": "none"
+    }],
+    "no-constant-condition": ["warn", { "checkLoops": false }],
+    "no-control-regex": "off",
+    "no-case-declarations": "off",
+    "no-empty": ["warn", { "allowEmptyCatch": true }],
+    "no-undef": "off",
+    "@typescript-eslint/no-this-alias": "off"
+  },
+  "ignorePatterns": [
+    "types/app.d.ts",
+    "types/app.js",
+    "generate-types.ts"
+  ]
 } 

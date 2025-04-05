@@ -13,6 +13,19 @@ type Options = Omit<EntryPointConfig, 'filePath'> & {
   compilationOptions?: CompilationOptions
 }
 
+declare global {
+  interface Bun {
+    file: (path: string) => { text: () => Promise<string> };
+    write: (path: string, content: string) => Promise<void>;
+    build: (options: {
+      entrypoints: string[];
+      outdir: string;
+      target: string;
+      plugins: BunPlugin[];
+    }) => Promise<void>;
+  }
+}
+
 const dts = (options?: Options): BunPlugin => {
   return {
     name: 'bun-plugin-dts',
@@ -55,7 +68,6 @@ await Bun.build({
   entrypoints: ['apps/server/src/app.ts'],
   outdir: 'apps/server/types',
   target: 'bun',
-
   plugins: [
     dts({
       compilationOptions: {

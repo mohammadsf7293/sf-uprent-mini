@@ -96,3 +96,48 @@ export {
 };
 
 export {};
+
+interface Schema {
+	type: string;
+	properties?: Record<string, unknown>;
+	items?: unknown;
+	required?: string[];
+	additionalProperties?: boolean;
+	patternProperties?: Record<string, unknown>;
+	oneOf?: unknown[];
+	anyOf?: unknown[];
+	allOf?: unknown[];
+	not?: unknown;
+	if?: unknown;
+	then?: unknown;
+	else?: unknown;
+	dependencies?: Record<string, unknown>;
+	propertyNames?: unknown;
+	const?: unknown;
+	enum?: unknown[];
+	format?: string;
+	contentEncoding?: string;
+	contentMediaType?: string;
+	title?: string;
+	description?: string;
+	default?: unknown;
+	examples?: unknown[];
+	readOnly?: boolean;
+	writeOnly?: boolean;
+	deprecated?: boolean;
+	discriminator?: {
+		propertyName: string;
+		mapping?: Record<string, string>;
+	};
+	xml?: {
+		name?: string;
+		namespace?: string;
+		prefix?: string;
+		attribute?: boolean;
+		wrapped?: boolean;
+	};
+	externalDocs?: {
+		description?: string;
+		url: string;
+	};
+}
