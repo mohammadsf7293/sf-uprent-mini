@@ -1,22 +1,23 @@
 // Function to check if we're in Chrome and if our extension is installed
-export function isChromeEnvironment() {
-    var isChromium = window.chrome;
-    var winNav = window.navigator;
-    var vendorName = winNav.vendor;
-    var isOpera = typeof window.opr !== "undefined";
-    var isFirefox = winNav.userAgent.indexOf("Firefox") > -1;
-    var isIEedge = winNav.userAgent.indexOf("Edg") > -1;
-  
-    var isGoogleChrome = isChromium !== null
-      && typeof isChromium !== "undefined"
-      && vendorName === "Google Inc."
-      && isOpera === false
-      && isIEedge === false
-      && (typeof winNav.userAgentData === "undefined" || winNav.userAgentData.brands.some(x => x.brand === "Google Chrome"));
-  
-    return isGoogleChrome;
-  }
-  
+export function isChromeEnvironment(): boolean {
+  const winNav = window.navigator;
+  const vendorName = winNav.vendor;
+  const isOpera = typeof (window as any).opr !== "undefined";
+  const isFirefox = winNav.userAgent.indexOf("Firefox") > -1;
+  const isIEedge = winNav.userAgent.indexOf("Edge") > -1;
+
+  return Boolean(
+    vendorName === "Google Inc."
+      && !isOpera
+      && !isFirefox
+      && !isIEedge
+      && (
+        typeof (winNav as any).userAgentData === "undefined" 
+        || (winNav as any).userAgentData?.brands?.some((x: { brand: string }) => x.brand === "Google Chrome")
+      )
+  );
+}
+
 // Function to check if uprent extensions is installed
 export async function isUprentExtensionInstalled(): Promise<boolean> {
     return new Promise((resolve) => {

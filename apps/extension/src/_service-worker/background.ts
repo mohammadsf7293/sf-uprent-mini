@@ -1,49 +1,93 @@
 import api from '~api'
 
 // Storage methods
-async function getStorageData(key: string) {
-  try {
-    const result = await chrome.storage.local.get(key);
-    return result[key];
-  } catch (error) {
-    console.error('Error getting storage data:', error);
-    return null;
-  }
+interface Message {
+  action?: string;
+  type?: string;
+  key?: string;
+  value?: unknown;
+  addresses?: string[];
+  data?: unknown;
 }
 
-async function setStorageData(key: string, value: any) {
-  try {
-    await chrome.storage.local.set({ [key]: value });
-    return true;
-  } catch (error) {
-    console.error('Error setting storage data:', error);
-    return false;
-  }
+interface Response {
+  success: boolean;
+  data?: unknown;
+  error?: string;
+}
+
+interface ChromeMessageSender {
+  tab?: chrome.tabs.Tab;
+  frameId?: number;
+  id?: string;
+  url?: string;
+  tlsChannelId?: string;
+}
+
+type MessageResponse = (response: unknown) => void;
+
+const defaultMaxDurations = {
+  walking: 30,
+  biking: 20,
+  driving: 15,
+  transit: 25,
+};
+
+async function getStorageData<T>(key: string): Promise<T | undefined> {
+  const result = await chrome.storage.local.get(key);
+  return result[key];
+}
+
+async function setStorageData<T>(key: string, value: T): Promise<void> {
+  await chrome.storage.local.set({ [key]: value });
 }
 
 // Listen for messages from content script
-chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
-  if (request.type === 'GET_STORAGE_DATA') {
-    getStorageData(request.key).then(response => {
-      console.log('BACKGROUND_GET_STORAGE_DATA2', request.key, response);
+chrome.runtime.onMessage.addListener((message: Message, sender: ChromeMessageSender, sendResponse: MessageResponse) => {
+  if (message.type === 'GET_STORAGE_DATA') {
+    if (!message.key) {
+      sendResponse(null);
+      return true;
+    }
+    getStorageData(message.key).then(response => {
+      console.log('BACKGROUND_GET_STORAGE_DATA2', message.key, response);
       sendResponse(response);
     });
     return true;
   }
   
-  if (request.type === 'SET_STORAGE_DATA') {
-    setStorageData(request.key, request.value).then(sendResponse);
+  if (message.type === 'SET_STORAGE_DATA') {
+    if (!message.key || message.value === undefined) {
+      sendResponse(null);
+      return true;
+    }
+    setStorageData(message.key, message.value).then(sendResponse);
     return true;
   }
   
-  if (request.action === "FETCH_DURATIONS") {
-    api.commute.durations.post({ addresses: request.addresses })
+  if (message.action === "FETCH_DURATIONS") {
+    if (!message.addresses || message.addresses.length === 0) {
+      sendResponse({ success: false, error: 'No addresses provided' });
+      return true;
+    }
+    api.commute.durations.post({ addresses: message.addresses })
       .then(response => {
-        sendResponse({ success: true, data: response.data })
+        sendResponse({ success: true, data: response.data } as Response);
       })
       .catch(error => {
-        sendResponse({ success: false, error })
+        sendResponse({ success: false, error: error.message } as Response);
+      });
+    return true;
+  }
+  
+  if (message.type === 'GET_MAX_DURATIONS') {
+    getStorageData<typeof defaultMaxDurations>('maxDurations')
+      .then((durations) => {
+        sendResponse({ success: true, data: durations || defaultMaxDurations });
       })
-    return true
+      .catch((error) => {
+        sendResponse({ success: false, error: error.message });
+      });
+    return true;
   }
 })
