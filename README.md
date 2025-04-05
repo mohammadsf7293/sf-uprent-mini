@@ -42,6 +42,14 @@ packages/~ui/components
 
 This was done for better modularity and cleaner project structure.
 
+# Suggestions for future improvements
+You can add an API to the server that checks for new extension versions.  
+If a newer version is available (i.e., newer than the user's current version), the API returns `true`.
+
+By implementing a **content script** function that periodically calls this API, we can notify users when an update is available.  
+For example, we can display an alert while they are browsing supported websites, encouraging them to install the latest version as soon as possible.
+
+
 # Overview
 
 This is a **monorepo**, that consists of several **apps** & **packages**.
