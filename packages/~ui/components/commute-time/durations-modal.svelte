@@ -11,10 +11,10 @@
     durations = null
   }
 
-  $: console.log('maxDurations store value:', $maxDurations);
+  // $: console.log('maxDurations store value:', $maxDurations);
 
   function isOverMaxDuration(mode: keyof Durations, duration: number): boolean {
-    console.log("isOverMaxDuration", mode, duration, $maxDurations[mode]);
+    // console.log("isOverMaxDuration", mode, duration, $maxDurations[mode]);
     return duration > $maxDurations[mode];
   }
 </script>
