@@ -42,6 +42,7 @@
       {loading} 
       onClick={handleLoadClick}
       disabled={$addresses.length === 0}
+      title={$addresses.length === 0 ? "You have to have at least one address to use this feature" : ""}
     >
       <RouteSVG slot="icon" />
       Load commutes
