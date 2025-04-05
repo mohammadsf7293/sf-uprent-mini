@@ -7,7 +7,7 @@
     primary = false,
     subtle = false,
     disabled = false,
-    onClick: Optional<(e: MouseEvent) => void> = undefined
+    onClick: ((e: MouseEvent) => void) | undefined = undefined
   export { className as class }
 
   $: loadingClass = `${primary ? '!.bg-primary-300' : '!.bg-black-300'} !.cursor-wait`
@@ -36,7 +36,7 @@
   {:else}
     <slot name="icon" />
   {/if}
-  <slot {Animated} />
+  <slot />
 </button>
 
 <style lang="postcss">

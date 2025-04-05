@@ -1,12 +1,13 @@
 {
   "extends": [
     "tsconfig/base.json",
+    "@tsconfig/svelte/tsconfig.json"
   ],
   "compilerOptions": {
     "target": "ESNext",
     "useDefineForClassFields": true,
     "module": "ESNext",
-    "moduleResolution": "Node",
+    "moduleResolution": "bundler",
     "resolveJsonModule": true,
     "isolatedModules": true,
     "strictPropertyInitialization": false,
@@ -18,7 +19,9 @@
       "DOM"
     ],
     "types": [
-      "bun-types"
+      "bun-types",
+      "svelte",
+      "chrome"
     ]
   },
   "include": [
@@ -27,5 +30,6 @@
     "components/**/*.ts",
     "components/**/*.svelte",
     "global-declarations.d.ts",
+    "svelte.d.ts"
   ]
 }

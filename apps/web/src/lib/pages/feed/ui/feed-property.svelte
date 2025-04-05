@@ -1,9 +1,11 @@
 <script lang="ts">
   import { CashSVG, DimensionsSVG } from '~ui/assets'
-  import type { Property } from '~core/database'
-  import { CommuteTime } from '$lib/widgets'
+  import type { Property, Durations } from '~core/database'
+  import { CommuteTime } from '~ui/components'
+  import { addresses } from '~ui/stores/addresses'
 
   export let property: Property
+  let durations: Record<string, Durations> | null = null
 </script>
 
 <div
@@ -51,5 +53,7 @@
       {/if}
     </div>
   </div>
-  <CommuteTime />
+  <CommuteTime 
+    durations={durations?.[$addresses[0]]} 
+  />
 </div>

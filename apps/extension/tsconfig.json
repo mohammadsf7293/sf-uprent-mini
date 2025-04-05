@@ -20,7 +20,8 @@
       "ESNext"
     ],
     "types": [
-      "chrome"
+      "chrome",
+      "svelte"
     ],
     "paths": {
       "@app/*": [
@@ -40,6 +41,15 @@
       ],
       "@shared/*": [
         "./src/shared/*"
+      ],
+      "~api": [
+        "../../packages/~api"
+      ],
+      "~core": [
+        "../../packages/~core"
+      ],
+      "~ui": [
+        "../../packages/~ui"
       ]
     }
   },
@@ -47,6 +57,7 @@
     "src/**/*.ts",
     "src/**/*.svelte",
     "config/**/*.ts",
-    "vite.config.ts"
+    "vite.config.ts",
+    "../../packages/~ui/**/*.svelte"
   ]
 }

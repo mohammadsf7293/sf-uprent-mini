@@ -51,8 +51,10 @@ declare const app: import("elysia").default<"", false, {
 } & {
 	commute: {
 		durations: {
-			get: {
-				body: unknown;
+			post: {
+				body: {
+					addresses: string[];
+				};
 				params: Record<never, string>;
 				query: unknown;
 				headers: unknown;
@@ -61,10 +63,12 @@ declare const app: import("elysia").default<"", false, {
 						status: "success";
 						payload: {
 							durations: {
-								walking: number | null;
-								driving: number | null;
-								transit: number | null;
-								biking: number | null;
+								[x: string]: {
+									walking: number | null;
+									driving: number | null;
+									transit: number | null;
+									biking: number | null;
+								};
 							};
 						};
 					};
@@ -92,3 +96,48 @@ export {
 };
 
 export {};
+
+interface Schema {
+	type: string;
+	properties?: Record<string, unknown>;
+	items?: unknown;
+	required?: string[];
+	additionalProperties?: boolean;
+	patternProperties?: Record<string, unknown>;
+	oneOf?: unknown[];
+	anyOf?: unknown[];
+	allOf?: unknown[];
+	not?: unknown;
+	if?: unknown;
+	then?: unknown;
+	else?: unknown;
+	dependencies?: Record<string, unknown>;
+	propertyNames?: unknown;
+	const?: unknown;
+	enum?: unknown[];
+	format?: string;
+	contentEncoding?: string;
+	contentMediaType?: string;
+	title?: string;
+	description?: string;
+	default?: unknown;
+	examples?: unknown[];
+	readOnly?: boolean;
+	writeOnly?: boolean;
+	deprecated?: boolean;
+	discriminator?: {
+		propertyName: string;
+		mapping?: Record<string, string>;
+	};
+	xml?: {
+		name?: string;
+		namespace?: string;
+		prefix?: string;
+		attribute?: boolean;
+		wrapped?: boolean;
+	};
+	externalDocs?: {
+		description?: string;
+		url: string;
+	};
+}

@@ -3,13 +3,26 @@
   "version": "0.0.0",
   "private": true,
   "type": "module",
+  "main": "./dist/index.js",
+  "types": "./dist/index.d.ts",
+  "scripts": {
+    "build": "vite build",
+    "dev": "vite build --watch"
+  },
   "dependencies": {
     "svelte": "4.2.9",
     "svelte-portal": "2.2.1",
     "svelte-tel-input": "3.5.2"
   },
   "devDependencies": {
+    "@sveltejs/vite-plugin-svelte": "^3.0.0",
+    "@tsconfig/svelte": "^5.0.0",
+    "autoprefixer": "^10.4.17",
     "eslint-config-custom": "workspace:*",
-    "tailwind-preset": "workspace:*"
+    "postcss": "^8.4.35",
+    "tailwind-preset": "workspace:*",
+    "typescript": "^5.0.0",
+    "vite": "^5.0.0",
+    "vite-tsconfig-paths": "^4.0.0"
   }
 }

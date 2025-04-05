@@ -4,23 +4,42 @@ import type { Durations } from '~core/database'
 import { randomInt } from '~core/helpers'
 
 const resDTO = t.Object({
-  durations: DurationsSchema,
+  durations: t.Record(t.String(), DurationsSchema),
 })
 
-export const commuteDurationsEndpointHandler = app.get(
+const reqDTO = t.Object({
+  addresses: t.Array(t.String()),
+})
+
+export const commuteDurationsEndpointHandler = app.post(
   '/durations',
-  ({ res }) => {
-    // mock commute times
-    const durations: Durations = {
-      walking: randomInt(45, 90),
-      biking: randomInt(25, 60),
-      driving: randomInt(10, 30),
-      transit: randomInt(10, 30),
+  ({ body }) => {
+    if (!body.addresses || !body.addresses.length) {
+      return {
+        status: 'error',
+        message: 'At least one address is required',
+      }
     }
 
-    return res.ok({
-      durations,
-    })
+    const durations = body.addresses.reduce((acc, address) => {
+      acc[address] = {
+        walking: randomInt(45, 90),
+        biking: randomInt(25, 60),
+        driving: randomInt(10, 30),
+        transit: randomInt(10, 30),
+      }
+      return acc
+    }, {} as Record<string, Durations>)
+
+    return {
+      status: 'success',
+      payload: {
+        durations,
+      },
+    }
   },
-  { response: res(resDTO) },
+  { 
+    body: reqDTO,
+    response: res(resDTO) 
+  },
 )
