@@ -26,13 +26,6 @@ interface ChromeMessageSender {
 
 type MessageResponse = (response: unknown) => void;
 
-const defaultMaxDurations = {
-  walking: 30,
-  biking: 20,
-  driving: 15,
-  transit: 25,
-};
-
 async function getStorageData<T>(key: string): Promise<T | undefined> {
   const result = await chrome.storage.local.get(key);
   return result[key];
