@@ -1,4 +1,5 @@
 # Debugging Description of the First Task
+There was an issue where clicking the **"Load Commutes"** button worked correctly in **web mode**, but did **not** work in **extension mode**.
 
 The initial issue was related to a **CORS block**.  
 Although the server was configured to accept requests from the origin:
