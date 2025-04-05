@@ -50,7 +50,6 @@ chrome.runtime.onMessage.addListener((message: Message, sender: ChromeMessageSen
       return true;
     }
     getStorageData(message.key).then(response => {
-      console.log('BACKGROUND_GET_STORAGE_DATA2', message.key, response);
       sendResponse(response);
     });
     return true;
@@ -76,17 +75,6 @@ chrome.runtime.onMessage.addListener((message: Message, sender: ChromeMessageSen
       })
       .catch(error => {
         sendResponse({ success: false, error: error.message } as Response);
-      });
-    return true;
-  }
-  
-  if (message.type === 'GET_MAX_DURATIONS') {
-    getStorageData<typeof defaultMaxDurations>('maxDurations')
-      .then((durations) => {
-        sendResponse({ success: true, data: durations || defaultMaxDurations });
-      })
-      .catch((error) => {
-        sendResponse({ success: false, error: error.message });
       });
     return true;
   }
