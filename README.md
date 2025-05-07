@@ -1,4 +1,9 @@
-# Debugging Description of the First Task
+# Chrome Extension Debugging Sample Project
+This sample project demonstrates how to debug issues in a Chrome extension.
+It is forked from the [Turborent repository](https://github.com/Turbo-Rent/uprent-mini), with bugs fixed and several additional features implemented.
+By exploring and working with this project, you’ll gain hands-on experience with Chrome extension development.
+
+# Debugging First bug
 There was an issue where clicking the **"Load Commutes"** button worked correctly in **web mode**, but did **not** work in **extension mode**.
 
 The initial issue was related to a **CORS block**.  
